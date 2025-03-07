@@ -4,7 +4,11 @@ project(CHIP-8)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_executable(CHIP-8 src/main.cpp)
+add_executable(CHIP-8 src/main.cpp
+	src/CHIP-8/CHIP-8.cpp
+	src/CHIP-8/Memory.cpp
+)
+target_include_directories(CHIP-8 PRIVATE include)
 
 set(SDL_STATIC ON)
 add_subdirectory(external/SDL EXCLUDE_FROM_ALL)

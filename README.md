@@ -21,3 +21,9 @@ Wait for CMake to run
 Select CHIP-8.exe as the startup item
 
 Run the executable
+
+## Resources
+
+[CHIP-8 emulator guide](https://tobiasvl.github.io/blog/write-a-chip-8-emulator/)
+
+[SDL3 documentation](https://wiki.libsdl.org/SDL3/FrontPage)
