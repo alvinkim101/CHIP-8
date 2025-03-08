@@ -11,4 +11,19 @@ namespace CHIP8
     {
         m_memory[address] = data;
     }
+
+    void CHIP8::SetPixel(const uint8_t row, const uint8_t col)
+    {
+        m_display.SetPixel(row, col);
+    }
+
+    void CHIP8::ClearPixel(const uint8_t row, const uint8_t col)
+    {
+        m_display.ClearPixel(row, col);
+    }
+
+    void CHIP8::Draw()
+    {
+        m_display.Draw();
+    }
 }
