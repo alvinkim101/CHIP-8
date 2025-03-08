@@ -1,5 +1,6 @@
 #include <CHIP-8/Memory.h>
 #include <CHIP-8/Display.h>
+#include <CHIP-8/Stack.h>
 
 namespace CHIP8
 {
@@ -13,8 +14,12 @@ namespace CHIP8
 		void ClearPixel(const uint8_t row, const uint8_t col);
 		void Draw();
 
+		void PushStack(const uint16_t address);
+		uint16_t PopStack();
+
 	private:
 		Memory m_memory;
 		Display m_display;
+		Stack m_stack;
 	};
 }

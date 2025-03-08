@@ -1,5 +1,7 @@
 #include <CHIP-8/CHIP-8.h>
 
+#include <cassert>
+
 namespace CHIP8
 {
     uint8_t CHIP8::ReadMemory(const uint16_t address) const
@@ -25,5 +27,15 @@ namespace CHIP8
     void CHIP8::Draw()
     {
         m_display.Draw();
+    }
+
+    void CHIP8::PushStack(const uint16_t address)
+    {
+        m_stack.Push(address);
+    }
+
+    uint16_t CHIP8::PopStack()
+    {
+        return m_stack.Pop();
     }
 }
