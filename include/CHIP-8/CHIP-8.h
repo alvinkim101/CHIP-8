@@ -1,6 +1,7 @@
 #include <CHIP-8/Memory.h>
 #include <CHIP-8/Display.h>
 #include <CHIP-8/Stack.h>
+#include <CHIP-8/Timer.h>
 
 namespace CHIP8
 {
@@ -21,5 +22,6 @@ namespace CHIP8
 		Memory m_memory;
 		Display m_display;
 		Stack m_stack;
+		Timer m_timer;
 	};
 }

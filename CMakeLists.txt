@@ -9,6 +9,7 @@ add_executable(CHIP-8 src/main.cpp
 	src/CHIP-8/Memory.cpp
 	src/CHIP-8/Display.cpp
 	src/CHIP-8/Stack.cpp
+	src/CHIP-8/Timer.cpp
 )
 target_include_directories(CHIP-8 PRIVATE include)
 
