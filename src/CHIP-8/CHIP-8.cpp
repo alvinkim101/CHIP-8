@@ -38,4 +38,14 @@ namespace CHIP8
     {
         return m_stack.Pop();
     }
+
+    void CHIP8::PressKey(const SDL_Scancode scancode)
+    {
+        m_keypad.Press(scancode);
+    }
+
+    void CHIP8::ReleaseKey()
+    {
+        m_keypad.Release();
+    }
 }

@@ -2,6 +2,7 @@
 #include <CHIP-8/Display.h>
 #include <CHIP-8/Stack.h>
 #include <CHIP-8/Timer.h>
+#include <CHIP-8/Keypad.h>
 
 namespace CHIP8
 {
@@ -18,10 +19,14 @@ namespace CHIP8
 		void PushStack(const uint16_t address);
 		uint16_t PopStack();
 
+		void PressKey(const SDL_Scancode scancode);
+		void ReleaseKey();
+
 	private:
 		Memory m_memory;
 		Display m_display;
 		Stack m_stack;
 		Timer m_timer;
+		Keypad m_keypad;
 	};
 }

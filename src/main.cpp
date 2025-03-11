@@ -16,6 +16,14 @@ int main(int argc, char* argv[])
 		{
 			switch (event.type)
 			{
+			case SDL_EVENT_KEY_DOWN:
+				chip8.PressKey(event.key.scancode);
+				break;
+
+			case SDL_EVENT_KEY_UP:
+				chip8.ReleaseKey();
+				break;
+
 			case SDL_EVENT_QUIT:
 				running = false;
 				break;
