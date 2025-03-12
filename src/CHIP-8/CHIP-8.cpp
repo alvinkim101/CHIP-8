@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+#include <SDL3/SDL_timer.h>
+
 namespace CHIP8
 {
     uint16_t CHIP8::ReadMemory(const uint16_t address) const
@@ -47,5 +49,32 @@ namespace CHIP8
     void CHIP8::ReleaseKey()
     {
         m_keypad.Release();
+    }
+
+    void CHIP8::Update()
+    {
+        Fetch();
+
+        SDL_DelayNS(s_delay); // To roughly match original CHIP-8 speeds
+    }
+
+    void CHIP8::Fetch()
+    {
+        uint16_t opcode = m_memory[m_register.programCounter];
+        m_register.programCounter++;
+
+        Decode(opcode);
+    }
+
+    void CHIP8::Decode(const uint16_t opcode)
+    {
+        Instruction instruction = Decoder::Decode(opcode);
+
+        Execute(instruction);
+    }
+
+    void CHIP8::Execute(Instruction instruction)
+    {
+        m_executor.Execute(instruction);
     }
 }
