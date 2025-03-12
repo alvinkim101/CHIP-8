@@ -3,6 +3,7 @@
 #include <CHIP-8/Stack.h>
 #include <CHIP-8/Timer.h>
 #include <CHIP-8/Keypad.h>
+#include <CHIP-8/Register.h>
 
 namespace CHIP8
 {
@@ -28,5 +29,6 @@ namespace CHIP8
 		Stack m_stack;
 		Timer m_timer;
 		Keypad m_keypad;
+		Register m_register;
 	};
 }
