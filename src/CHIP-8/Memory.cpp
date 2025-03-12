@@ -9,14 +9,14 @@ namespace CHIP8
 		LoadFonts();
 	}
 
-	uint8_t Memory::operator[](const uint16_t address) const
+	uint16_t Memory::operator[](const uint16_t address) const
 	{
 		assert(address < m_memory.size());
 
 		return m_memory[address];
 	}
 
-	uint8_t& Memory::operator[](const std::uint16_t address)
+	uint16_t& Memory::operator[](const std::uint16_t address)
 	{
 		assert(address < m_memory.size());
 		assert(address >= 0x200); // Leave the first 0x200 exclusive addresses alone (except for font loading) for compatibility

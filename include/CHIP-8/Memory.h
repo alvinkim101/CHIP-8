@@ -10,12 +10,12 @@ namespace CHIP8
 	public:
 		Memory();
 
-		uint8_t operator[](const uint16_t address) const;
-		uint8_t& operator[](const uint16_t address);
+		uint16_t operator[](const uint16_t address) const;
+		uint16_t& operator[](const uint16_t address);
 
 	private:
 		void LoadFonts();
 
-		std::array<uint8_t, s_bytes> m_memory;
+		std::array<uint16_t, s_bytes / 2> m_memory;
 	};
 }

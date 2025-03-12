@@ -4,7 +4,7 @@
 
 namespace CHIP8
 {
-    uint8_t CHIP8::ReadMemory(const uint16_t address) const
+    uint16_t CHIP8::ReadMemory(const uint16_t address) const
     {
         return m_memory[address];
     }
