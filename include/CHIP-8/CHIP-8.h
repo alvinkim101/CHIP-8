@@ -1,3 +1,5 @@
+#pragma once
+
 #include <CHIP-8/Memory.h>
 #include <CHIP-8/Display.h>
 #include <CHIP-8/Stack.h>

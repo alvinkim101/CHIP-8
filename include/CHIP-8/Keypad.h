@@ -1,3 +1,5 @@
+#pragma once
+
 #include <unordered_map>
 
 #include <SDL3/SDL_scancode.h>
