@@ -30,8 +30,7 @@ int main(int argc, char* argv[])
 			}
 		}
 		
-		chip8.SetPixel(0, 0);
-		chip8.Draw();
+		chip8.Update();
 	}
 
 	SDL_Quit();

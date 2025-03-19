@@ -22,7 +22,7 @@ namespace CHIP8
 		SDL_DestroyWindow(m_window);
 	}
 
-	void Display::Set(const uint8_t row, const uint8_t col)
+	void Display::SetPixel(const uint8_t row, const uint8_t col)
 	{
 		assert(row < s_height);
 		assert(col < s_width);
@@ -30,12 +30,17 @@ namespace CHIP8
 		m_display[row][col] = true;
 	}
 
-	void Display::Clear(const uint8_t row, const uint8_t col)
+	void Display::ClearPixel(const uint8_t row, const uint8_t col)
 	{
 		assert(row < s_height);
 		assert(col < s_width);
 
 		m_display[row][col] = false;
+	}
+
+	void Display::Clear()
+	{
+		m_display = {};
 	}
 
 	void Display::Draw()

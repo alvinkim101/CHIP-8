@@ -21,8 +21,9 @@ namespace CHIP8
 		Display();
 		~Display();
 
-		void Set(const uint8_t row, const uint8_t col);
-		void Clear(const uint8_t row, const uint8_t col);
+		void SetPixel(const uint8_t row, const uint8_t col);
+		void ClearPixel(const uint8_t row, const uint8_t col);
+		void Clear();
 		void Draw();
 
 	private:
