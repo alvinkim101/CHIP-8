@@ -1,6 +1,8 @@
 #include <CHIP-8/Executor.h>
 #include <CHIP-8/CHIP-8.h>
 
+#include <cassert>
+
 namespace CHIP8
 {
 	Executor::Executor(CHIP8& chip8) : m_chip8(chip8)
@@ -34,6 +36,53 @@ namespace CHIP8
 			};
 		m_delegates[Instruction::Draw] = [this](const uint16_t opcode)
 			{
+				Register& _register = m_chip8.GetRegister(); // Didn't know register was a keyword
+				uint16_t I = _register.index;
+				uint8_t& VF = _register.variables[0xF];
+				uint8_t N = opcode & 0x000F;
+				uint8_t X = ((opcode & 0x0F00) >> 8) % Display::s_width;
+				uint8_t Y = ((opcode & 0x00F0) >> 4) % Display::s_height;
+
+				VF = 0;
+				for (int i = 0; i < N; i++)
+				{
+					const uint8_t sprite = m_chip8.ReadMemory(I + N);
+
+					for (int j = 7; j >= 0; j--)
+					{
+						uint8_t spriteBit = sprite >> j;
+
+						if (spriteBit)
+						{
+							assert(X < Display::s_width);
+							assert(Y < Display::s_height);
+							bool pixel = m_chip8.CheckPixel(Y, X);
+							
+							if (pixel)
+							{
+								m_chip8.ClearPixel(Y, X);
+								VF = 1;
+							}
+							else
+							{
+								m_chip8.SetPixel(Y, X);
+							}
+						}
+
+						if (X == Display::s_width - 1)
+						{
+							break;
+						}
+						X++;
+					}
+
+					Y++;
+					if (Y == Display::s_height - 1)
+					{
+						break;
+					}
+				}
+
 				m_chip8.Draw();
 			};
 	}

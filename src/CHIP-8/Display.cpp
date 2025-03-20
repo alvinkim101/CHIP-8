@@ -22,6 +22,11 @@ namespace CHIP8
 		SDL_DestroyWindow(m_window);
 	}
 
+	bool Display::CheckPixel(const uint8_t row, const uint8_t col)
+	{
+		return m_display[row][col];
+	}
+
 	void Display::SetPixel(const uint8_t row, const uint8_t col)
 	{
 		assert(row < s_height);

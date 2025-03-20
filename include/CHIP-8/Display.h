@@ -13,7 +13,7 @@ namespace CHIP8
 
 	class Display
 	{
-	private:
+	public:
 		static constexpr uint8_t s_width = 64;
 		static constexpr uint8_t s_height = 32;
 
@@ -21,6 +21,7 @@ namespace CHIP8
 		Display();
 		~Display();
 
+		bool CheckPixel(const uint8_t row, const uint8_t col);
 		void SetPixel(const uint8_t row, const uint8_t col);
 		void ClearPixel(const uint8_t row, const uint8_t col);
 		void Clear();

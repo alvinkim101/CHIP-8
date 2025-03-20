@@ -16,6 +16,11 @@ add_executable(CHIP-8 src/main.cpp
 )
 target_include_directories(CHIP-8 PRIVATE include)
 
+add_custom_command(TARGET CHIP-8 POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+	${CMAKE_CURRENT_SOURCE_DIR}/assets ${CMAKE_CURRENT_BINARY_DIR}/assets
+)
+
 set(SDL_STATIC ON)
 add_subdirectory(external/SDL EXCLUDE_FROM_ALL)
 target_link_libraries(CHIP-8 PRIVATE SDL3::SDL3-static)

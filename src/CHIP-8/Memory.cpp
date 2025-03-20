@@ -1,6 +1,8 @@
 #include <CHIP-8/Memory.h>
+#include <CHIP-8/Register.h>
 
 #include <cassert>
+#include <fstream>
 
 namespace CHIP8
 {
@@ -9,19 +11,31 @@ namespace CHIP8
 		LoadFonts();
 	}
 
-	uint16_t Memory::operator[](const uint16_t address) const
+	uint8_t Memory::operator[](const uint16_t address) const
 	{
 		assert(address < m_memory.size());
 
 		return m_memory[address];
 	}
 
-	uint16_t& Memory::operator[](const std::uint16_t address)
+	uint8_t& Memory::operator[](const std::uint16_t address)
 	{
 		assert(address < m_memory.size());
 		assert(address >= 0x200); // Leave the first 0x200 exclusive addresses alone (except for font loading) for compatibility
 
 		return m_memory[address];
+	}
+
+	void Memory::LoadROM(const std::string& fileName)
+	{
+		std::ifstream file(fileName, std::ios_base::binary);
+		assert(file);
+
+		file.seekg(0, std::ios::end);
+		size_t size = file.tellg();
+		file.seekg(0, std::ios::beg);
+
+		file.read(reinterpret_cast<char*>(&m_memory[s_startingAddress]), size); // Does strict aliasing apply here?
 	}
 
 	void Memory::LoadFonts()

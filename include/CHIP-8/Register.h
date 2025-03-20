@@ -1,14 +1,14 @@
 #pragma once
 
+#include <CHIP-8/Memory.h>
+
 #include <array>
 
 namespace CHIP8
 {
 	struct Register
 	{
-		static constexpr uint16_t s_startingAddress = 0x200;
-
-		uint16_t programCounter{s_startingAddress};
+		uint16_t programCounter{Memory::s_startingAddress};
 		uint16_t index{};
 
 		/*

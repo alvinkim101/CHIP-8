@@ -6,7 +6,7 @@
 
 namespace CHIP8
 {
-    uint16_t CHIP8::ReadMemory(const uint16_t address) const
+    uint8_t CHIP8::ReadMemory(const uint16_t address) const
     {
         return m_memory[address];
     }
@@ -14,6 +14,11 @@ namespace CHIP8
     void CHIP8::WriteMemory(const uint16_t address, const uint8_t data)
     {
         m_memory[address] = data;
+    }
+
+    bool CHIP8::CheckPixel(const uint8_t row, const uint8_t col)
+    {
+        return m_display.CheckPixel(row, col);
     }
 
     void CHIP8::SetPixel(const uint8_t row, const uint8_t col)
@@ -68,10 +73,17 @@ namespace CHIP8
         SDL_DelayNS(s_delay); // To roughly match original CHIP-8 speeds
     }
 
+    void CHIP8::LoadROM(const std::string& fileName)
+    {
+        m_memory.LoadROM(fileName);
+    }
+
     void CHIP8::Fetch()
     {
-        uint16_t opcode = m_memory[m_register.programCounter];
-        m_register.programCounter++;
+        uint16_t opcode;
+        memcpy(&opcode, &m_memory[m_register.programCounter], 2);
+        opcode = (opcode << 8) | (opcode >> 8); // Want it to be big endian. TODO: Check system endianess
+        m_register.programCounter += 2;
 
         Decode(opcode);
     }

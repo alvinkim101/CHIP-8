@@ -7,6 +7,7 @@ int main(int argc, char* argv[])
 {
 	SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO);
 	CHIP8::CHIP8 chip8;
+	chip8.LoadROM("assets/IBM Logo.ch8");
 
 	bool running = true;
 	while (running)

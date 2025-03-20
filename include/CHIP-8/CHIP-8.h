@@ -9,6 +9,8 @@
 #include <CHIP-8/Decoder.h>
 #include <CHIP-8/Executor.h>
 
+#include <string>
+
 namespace CHIP8
 {
 	class CHIP8
@@ -16,9 +18,10 @@ namespace CHIP8
 	private:
 		static constexpr uint64_t s_delay = 1428571; // nanoseconds
 	public:
-		uint16_t ReadMemory(const uint16_t address) const;
+		uint8_t ReadMemory(const uint16_t address) const;
 		void WriteMemory(const uint16_t address, const uint8_t data);
 
+		bool CheckPixel(const uint8_t row, const uint8_t col);
 		void SetPixel(const uint8_t row, const uint8_t col);
 		void ClearPixel(const uint8_t row, const uint8_t col);
 		void ClearScreen();
@@ -33,6 +36,8 @@ namespace CHIP8
 		Register& GetRegister();
 
 		void Update();
+
+		void LoadROM(const std::string& fileName);
 
 	private:
 		void Fetch();

@@ -9,7 +9,7 @@ namespace CHIP8
 {
 	const std::unordered_map<uint8_t, Instruction> Decoder::s_firstNibbleToInstruction
 	{
-		// First nibble of opcode is checked (opcode >> 12)
+		// First nibble of opcode is checked
 		// Might need to rethink this since there is overlap e.g. 00E0 is clear screen and 00EE is returning from a subroutine
 
 		{ 0x0, Instruction::ClearScreen },
@@ -24,7 +24,7 @@ namespace CHIP8
 	{
 		try
 		{
-			uint8_t nibble = opcode >> 12;
+			uint8_t nibble = (opcode & 0xF000) >> 12;
 			return s_firstNibbleToInstruction.at(nibble);
 		}
 		catch (const std::out_of_range& e)
