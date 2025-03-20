@@ -15,7 +15,7 @@ namespace CHIP8
 		m_delegates[Instruction::Jump] = [this](const uint16_t opcode)
 			{
 				uint16_t programCounter = opcode & 0x0FFF;
-				m_chip8.GetRegister().programCounter = programCounter;
+				m_chip8.GetRegister().programCounter = programCounter; // ROMS know that valid PC are at 0x200 and above
 			};
 		m_delegates[Instruction::SetRegisterVX] = [this](const uint16_t opcode)
 			{
@@ -37,52 +37,51 @@ namespace CHIP8
 		m_delegates[Instruction::Draw] = [this](const uint16_t opcode)
 			{
 				Register& _register = m_chip8.GetRegister(); // Didn't know register was a keyword
+				uint8_t N = opcode & 0x000F;
+				uint8_t VX = _register.variables[((opcode & 0x0F00) >> 8)] % Display::s_width;
+				uint8_t VY = _register.variables[((opcode & 0x00F0) >> 4)] % Display::s_height;
 				uint16_t I = _register.index;
 				uint8_t& VF = _register.variables[0xF];
-				uint8_t N = opcode & 0x000F;
-				uint8_t X = ((opcode & 0x0F00) >> 8) % Display::s_width;
-				uint8_t Y = ((opcode & 0x00F0) >> 4) % Display::s_height;
-
 				VF = 0;
+
 				for (int i = 0; i < N; i++)
 				{
-					const uint8_t sprite = m_chip8.ReadMemory(I + N);
+					uint8_t row = (VY + i) % Display::s_height;
+					const uint8_t sprite = m_chip8.ReadMemory(I + i);
 
-					for (int j = 7; j >= 0; j--)
+					for (int j = 0; j < 8; j++)
 					{
-						uint8_t spriteBit = sprite >> j;
+						uint8_t col = (VX + j) % Display::s_width;
+						uint8_t spriteBit = sprite & (0x80 >> j);
 
 						if (spriteBit)
 						{
-							assert(X < Display::s_width);
-							assert(Y < Display::s_height);
-							bool pixel = m_chip8.CheckPixel(Y, X);
+							bool pixel = m_chip8.CheckPixel(row, col);
 							
 							if (pixel)
 							{
-								m_chip8.ClearPixel(Y, X);
+								m_chip8.ClearPixel(row, col);
 								VF = 1;
 							}
 							else
 							{
-								m_chip8.SetPixel(Y, X);
+								m_chip8.SetPixel(row, col);
 							}
 						}
 
-						if (X == Display::s_width - 1)
+						if (col == Display::s_width - 1)
 						{
 							break;
 						}
-						X++;
 					}
 
-					Y++;
-					if (Y == Display::s_height - 1)
+					if (row == Display::s_height - 1)
 					{
 						break;
 					}
 				}
 
+				// IBM logo sometimes clips, but when I add a delay of 100ms it's fine. Might be rendering too frequently?
 				m_chip8.Draw();
 			};
 	}
